@@ -3,6 +3,7 @@ import supertest from "supertest";
 import { faker } from '@faker-js/faker';
 import httpStatus from "http-status";
 import { fruitFactory } from "./factories/fruit-factory";
+import fruits from "data/fruits";
 
 const api = supertest(app);
 
@@ -59,5 +60,10 @@ describe("GET /fruits", () => {
             price: expect.any(Number),
 
         })
+    });
+    it("should return all fruits if no id is present", async () => {
+        const { status , body } = await api.get('/fruits')
+        expect(status).toBe(httpStatus.OK)
+        expect(body).toEqual(fruits)
     });
 })
